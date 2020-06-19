@@ -2,19 +2,19 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java:
 // http://www.viva64.com
 
-// Radix my love.cpp : Этот файл содержит функцию "main". Здесь начинается и
-// заканчивается выполнение программы.
-//
-
 #include <algorithm>
+#include <deque>
 #include <iostream>
 #include <iterator>
 #include <list>
 #include <vector>
-#include <deque>
 #include "CPUtime.h"
 
-namespace rdx{
+#ifndef _STD
+#define _STD ::std::
+#endif
+
+namespace rdx {
 template <typename _Ty>
 union _Union_radix_data {
   _Ty data;
@@ -31,15 +31,16 @@ inline void radix_lsd(
   _Adl_verify_range(_First, _Last);    // TODO: reverse !!!
   auto _UFirst = _First._Unwrapped();  // TODO get unwrapped
   const auto _ULast = _Last._Unwrapped();
-  _Union_radix_data<_InIt::value_type> _T_uni;
-  _STD vector<_Union_radix_data<_InIt::value_type>> _Radix_list;
-  _STD vector<_STD vector<_Union_radix_data<_InIt::value_type>>> _Radix_vec(
+  using _V_type = typename _InIt::value_type;
+  _Union_radix_data<_V_type> _T_uni;
+  _STD vector<_Union_radix_data<_V_type>> _Radix_list;
+  _STD vector<_STD vector<_Union_radix_data<_V_type>>> _Radix_vec(
       256);  // without uni more fast?
   for (; _UFirst != _ULast; ++_UFirst) {
     _T_uni.data = *_UFirst;
     _Radix_list.push_back(_T_uni);
   }
-  for (size_t i = 0; i < sizeof(_InIt::value_type); ++i) {
+  for (size_t i = 0; i < sizeof(_V_type); ++i) {
     auto begin2 = getCPUTime();
     for (auto _LFirst = _Radix_list.begin(); _LFirst != _Radix_list.end();
          ++_LFirst) {
@@ -54,13 +55,11 @@ inline void radix_lsd(
     }
   }
 }
-}
-
-
+}  // namespace rdx
 
 int main() {
   _STD cout << "\t\t\t\t===== 8 bayts =====" << _STD endl;
-  for (size_t i = 100; i <= 10000000; i*=10) {
+  for (size_t i = 100; i <= 10000000; i *= 10) {
     _STD vector<uint64_t> a, b;
     for (size_t j = 0; j < i; j++) {
       uint64_t temp = ((((uint64_t)rand() << 45) | ((uint64_t)rand() << 30) |
@@ -80,7 +79,7 @@ int main() {
     _STD sort(b.begin(), b.end());
     auto end1 = getCPUTime();
 
-     _STD cout << "cardinality: " << i << "\tradix: " << end - begin
+    _STD cout << "cardinality: " << i << "\tradix: " << end - begin
               << "\tstd: " << end1 - begin1
               << "\tradix : std = " << (end - begin) / (end1 - begin1)
               << _STD endl;
@@ -107,18 +106,17 @@ int main() {
     std::sort(b.begin(), b.end());
     auto end1 = getCPUTime();
 
-     std::cout << "cardinality: " << i << "\tradix: " << end - begin
+    std::cout << "cardinality: " << i << "\tradix: " << end - begin
               << "\tstd: " << end1 - begin1
               << "\tradix : std = " << (end - begin) / (end1 - begin1)
               << std::endl;
   }
 
-   std::cout << std::endl << "\t\t\t\t===== 2 bayts =====" << std::endl;
+  std::cout << std::endl << "\t\t\t\t===== 2 bayts =====" << std::endl;
   for (size_t i = 100; i <= 100000000; i *= 10) {
     std::vector<uint16_t> a, b;
     for (size_t j = 0; j < i; j++) {
-      uint16_t temp = (((uint16_t)rand()) << 1) |
-                      (rand() & 1);
+      uint16_t temp = (((uint16_t)rand()) << 1) | (rand() & 1);
 
       a.push_back(temp);
       b.push_back(temp);
@@ -132,7 +130,8 @@ int main() {
     std::sort(b.begin(), b.end());
     auto end1 = getCPUTime();
 
-    std::cout << "cardinality: " << i <<"\tradix: " << end - begin << "\tstd: " << end1 - begin1
+    std::cout << "cardinality: " << i << "\tradix: " << end - begin
+              << "\tstd: " << end1 - begin1
               << "\tradix : std = " << (end - begin) / (end1 - begin1)
               << std::endl;
   }
@@ -141,7 +140,7 @@ int main() {
   for (size_t i = 100; i <= 100000000000; i *= 10) {
     std::vector<uint8_t> a, b;
     for (size_t j = 0; j < i; j++) {
-      uint8_t temp =(uint8_t)rand();
+      uint8_t temp = (uint8_t)rand();
 
       a.push_back(temp);
       b.push_back(temp);
@@ -155,7 +154,7 @@ int main() {
     std::sort(b.begin(), b.end());
     auto end1 = getCPUTime();
 
-     std::cout << "cardinality: " << i << "\tradix: " << end - begin
+    std::cout << "cardinality: " << i << "\tradix: " << end - begin
               << "\tstd: " << end1 - begin1
               << "\tradix : std = " << (end - begin) / (end1 - begin1)
               << std::endl;

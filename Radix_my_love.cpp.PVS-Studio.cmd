@@ -1,0 +1,1 @@
+@call "C:\Program Files (x86)\PVS-Studio\x64\PVS-Studio.exe" --cfg "C:\Users\shrek\source\repos\Radix my love\Radix_my_love.cpp.PVS-Studio.cfg"
