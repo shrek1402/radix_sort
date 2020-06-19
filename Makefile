@@ -9,7 +9,7 @@ allO = Radix_my_love.o CPUtime.o
 all: build run               # 
 ##############################
 
-build:  $(allFolders)
+build:  $(allFolders) Radix
 
 	
 	
@@ -29,5 +29,5 @@ CPUtime.o: CPUtime.cpp
 	
 ############################  OTHER  ############################	
 	
-run: Radix
+run: ./a
 	
