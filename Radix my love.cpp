@@ -25,8 +25,7 @@ inline void radix_msd(_InIt _First, _InIt _Last) {}
 
 template <class _InIt>
 inline void radix_lsd(
-    _InIt _First,
-    _InIt _Last) {  // perform function for each element [_First, _Last)
+    _InIt _First, _InIt _Last) {  // perform function for each element [_First, _Last)
   _Adl_verify_range(_First, _Last);    // TODO: reverse !!!
   auto _UFirst = _First._Unwrapped();  // TODO get unwrapped
   const auto _ULast = _Last._Unwrapped();
