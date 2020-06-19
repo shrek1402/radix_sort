@@ -6,14 +6,15 @@
 #include <deque>
 #include <iostream>
 #include <iterator>
-#include <list>
+#include <xutility>
 #include <vector>
 #include "CPUtime.h"
+
 
 #ifndef _STD
 #define _STD ::std::
 #endif
-_STD list<int> a;
+
 namespace rdx {
 template <typename _Ty>
 union _Union_radix_data {
