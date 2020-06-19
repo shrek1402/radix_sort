@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Radix my love", "Radix my love.vcxproj", "{5398213C-D5A2-43F6-B90F-96200E32F6C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5398213C-D5A2-43F6-B90F-96200E32F6C0}.Debug|x64.ActiveCfg = Debug|x64
+		{5398213C-D5A2-43F6-B90F-96200E32F6C0}.Debug|x64.Build.0 = Debug|x64
+		{5398213C-D5A2-43F6-B90F-96200E32F6C0}.Debug|x86.ActiveCfg = Debug|Win32
+		{5398213C-D5A2-43F6-B90F-96200E32F6C0}.Debug|x86.Build.0 = Debug|Win32
+		{5398213C-D5A2-43F6-B90F-96200E32F6C0}.Release|x64.ActiveCfg = Release|x64
+		{5398213C-D5A2-43F6-B90F-96200E32F6C0}.Release|x64.Build.0 = Release|x64
+		{5398213C-D5A2-43F6-B90F-96200E32F6C0}.Release|x86.ActiveCfg = Release|Win32
+		{5398213C-D5A2-43F6-B90F-96200E32F6C0}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD2075F7-C73A-4440-9ADB-8CA9DBC6E9A7}
+	EndGlobalSection
+EndGlobal
