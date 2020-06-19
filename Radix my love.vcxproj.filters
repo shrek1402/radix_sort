@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Radix my love.cpp">
+    <ClCompile Include="CPUtime.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="CPUtime.cpp">
+    <ClCompile Include="Radix_my_love.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

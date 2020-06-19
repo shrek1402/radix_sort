@@ -152,7 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CPUtime.cpp" />
-    <ClCompile Include="Radix my love.cpp" />
+    <ClCompile Include="Radix_my_love.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPUtime.h" />
