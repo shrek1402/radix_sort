@@ -17,7 +17,7 @@ build:  $(allFolders)
 Radix: $(allO)
 	g++ $(CFLAGS) $^ -o $@ 
 	
-Radix_my_love.o: Radix my love.cpp
+Radix_my_love.o: Radix_my_love.cpp
 	$(OBJ)
 
 CPUtime.o: CPUtime.cpp
