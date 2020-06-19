@@ -2,7 +2,8 @@ CFLAGS = -std=c++17 # -Werror -pedantic-errors -Wall -Wextra -Wpedantic -Wcast-a
 OBJ = g++ $(CFLAGS) -c $< -o $@
 TEST = # g++ $(CFLAGS) -I ..third/catch2 -c $< -o $@
 allO = Radix_my_love.o CPUtime.o
-
+ 
+ 
 
 ##############################
 all: build run               # 
