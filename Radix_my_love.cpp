@@ -1,7 +1,7 @@
 ﻿// This is a personal academic project. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java:
 // http://www.viva64.com
-
+#define  _ITERATOR_DEBUG_LEVEL 0
 #include <algorithm>
 #include <deque>
 #include <iostream>
@@ -24,51 +24,54 @@ template <class _InIt>
 inline void radix_msd(_InIt _First, _InIt _Last) {}
 
 template <class _InIt>
-inline void radix_lsd(
-    _InIt _First,
-    _InIt _Last) {  // perform function for each element [_First, _Last)
-  //_Adl_verify_range(_First, _Last);  // TODO: reverse !!!
-  auto _UFirst = _First; // _STD _Get_unwrapped(_First);  // TODO get unwrapped
-  const auto _ULast = _Last;  //_STD _Get_unwrapped(_Last);
+// perform function for each element [_First, _Last)
+inline void radix_lsd(_InIt _First, _InIt _Last) {  
   using _V_type = typename _InIt::value_type;
   _Union_radix_data<_V_type> _T_uni;
-  _STD vector<_Union_radix_data<_V_type>> _Radix_list;
-  _STD vector<_STD vector<_Union_radix_data<_V_type>>> _Radix_vec(
-      256);  // without uni more fast?
+  _STD _Adl_verify_range(_First, _Last);  // TODO: reverse !!!
+  _V_type* _UFirst = _STD _Get_unwrapped(_First);  // TODO get unwrapped
+  const _V_type* _ULast = _STD _Get_unwrapped(_Last);
+  _STD vector<_Union_radix_data<_V_type>> _Radix_vec;
+  _STD vector<_STD vector<_Union_radix_data<_V_type>>> _Radix_vec_tmp(256);  // without uni more fast?
+  
   for (; _UFirst != _ULast; ++_UFirst) {
-    _T_uni.data = *_UFirst;
-    _Radix_list.push_back(_T_uni);
+    _T_uni.data = *_UFirst;    
+    _Radix_vec.emplace_back(_T_uni);
   }
   for (size_t i = 0; i < sizeof(_V_type); ++i) {
-    auto begin2 = getCPUTime();
-    for (auto _LFirst = _Radix_list.begin(); _LFirst != _Radix_list.end();
-         ++_LFirst) {
-      _Radix_vec.at((*_LFirst).mas_data[i]).push_back(*_LFirst);
+    _Union_radix_data<_V_type>* _LFirst = _STD _Get_unwrapped(_Radix_vec.begin());
+    const _Union_radix_data<_V_type>* _LLast = _STD _Get_unwrapped(_Radix_vec.end());
+    for (; _LFirst != _LLast; ++_LFirst) {
+      _Radix_vec_tmp.at((*_LFirst).mas_data[i]).emplace_back(*_LFirst);
     }
-    _Radix_list.clear();
+    _Radix_vec.clear();
 
     for (size_t i = 0; i < 256; i++) {
-      _Radix_list.insert(_Radix_list.end(), _Radix_vec.at(i).begin(),
-                         _Radix_vec.at(i).end());
-      _Radix_vec.at(i).clear();
+      _Radix_vec.insert(_Radix_vec.end(), _Radix_vec_tmp[i].begin(),
+                         _Radix_vec_tmp[i].end());
+      _Radix_vec_tmp[i].clear();
     }
   }
 }
 }  // namespace rdx
+#define MAX_LENGTH 100000000// 2  1 1 0.9
 
 int main() {
-  _STD cout << "\t\t\t\t===== 8 bayts =====" << _STD endl;
-  for (size_t i = 100; i <= 10000000; i *= 10) {
-    _STD vector<uint64_t> a, b;
-    for (size_t j = 0; j < i; j++) {
-      uint64_t temp = ((((uint64_t)rand() << 45) | ((uint64_t)rand() << 30) |
-                        ((uint64_t)rand() << 15) | ((uint64_t)rand()))
-                       << 3) |
-                      (rand() & 7);
+  _STD vector<uint64_t> random_vec;
+  for (size_t i = 0; i < MAX_LENGTH; i++) {
+    uint64_t temp =
+        ((((uint64_t)rand() << 45) | ((uint64_t)rand() << 30) |
+          ((uint64_t)rand() << 15) | ((uint64_t)rand()))
+         << 3) |
+        (rand() & 7);
+    random_vec.emplace_back(temp);
+  }
 
-      a.push_back(temp);
-      b.push_back(temp);
-    }
+  _STD cout << "\t\t\t\t===== 8 byte =====" << _STD endl;
+  for (size_t i = 100; i <= MAX_LENGTH; i *= 10) {
+    _STD vector<uint64_t> a(i), b(i);
+    _STD copy(random_vec.begin(), random_vec.begin() + i, a.begin());
+    _STD copy(random_vec.begin(), random_vec.begin() + i, b.begin());
 
     auto begin = getCPUTime();
     rdx::radix_lsd(a.begin(), a.end());
@@ -158,4 +161,5 @@ int main() {
               << "\tradix : std = " << (end - begin) / (end1 - begin1)
               << std::endl;
   }
+  return 0;
 }
