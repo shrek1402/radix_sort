@@ -8,6 +8,7 @@
 #include <iterator>
 #include <deque>
 #include <vector>
+#include <xutility>
 #include "CPUtime.h"
 
 #ifndef _STD
