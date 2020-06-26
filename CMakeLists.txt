@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 3.16)
 
 project(main)
 
-add_executable(main CPUtime.cpp)
-add_executable(main Radix_my_love.cpp)
+set(SOURCE_EXE CPUtime.cpp Radix_my_love.cpp)
+add_executable(main main ${SOURCE_EXE})
+
 
 install(TARGETS main)
 
