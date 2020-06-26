@@ -5,7 +5,6 @@ project(main)
 set(SOURCE CPUtime.cpp Radix_my_love.cpp)
 add_executable(main ${SOURCE})
 
-
 install(TARGETS main)
 
 enable_testing()
