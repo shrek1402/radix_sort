@@ -6,12 +6,15 @@
 #include <algorithm>
 #include <iostream>
 #include <map>
-#include <xtree>
 #include <vector>
 #include "CPUtime.h"
 
 #ifndef _STD
 #define _STD ::std::
+#endif
+
+#ifndef _RDX
+#define _RDX ::rdx::
 #endif
 
 
@@ -29,12 +32,12 @@ inline void radix_msd(_InIt _First, _InIt _Last) {}
 template <class _InIt>
 inline void radix_lsd(_InIt _First, _InIt _Last) {
   using _V_type = typename _InIt::value_type;
-  rdx::_Union_radix_data<_V_type> _T_uni;
-  _STD _Adl_verify_range(_First, _Last);           // TODO: reverse !!!
-  _V_type* _UFirst = _STD _Get_unwrapped(_First);  // TODO get unwrapped
-  const _V_type* _ULast = _STD _Get_unwrapped(_Last);
-  _STD vector<::rdx::_Union_radix_data<_V_type>> _Radix_vec;
-  _STD vector<_STD vector<rdx::_Union_radix_data<_V_type>>> _Radix_vec_tmp(256);
+  _RDX _Union_radix_data<_V_type> _T_uni;
+  //_STD _Adl_verify_range(_First, _Last);           // TODO: reverse !!!
+        _V_type* _UFirst	= &* _First;  // TODO get unwrapped
+  const _V_type* _ULast		= &* _Last;
+  _STD vector<_RDX _Union_radix_data<_V_type>> _Radix_vec;
+  _STD vector<_STD vector<_RDX _Union_radix_data<_V_type>>> _Radix_vec_tmp(256);
   // without uni more fast?
 
   for (; _UFirst != _ULast; ++_UFirst) {
@@ -42,10 +45,10 @@ inline void radix_lsd(_InIt _First, _InIt _Last) {
     _Radix_vec.emplace_back(_T_uni);
   }
   for (size_t i = 0; i < sizeof(_V_type); ++i) {
-    ::rdx::_Union_radix_data<_V_type>* _LFirst =
-        _STD _Get_unwrapped(_Radix_vec.begin());
-    const ::rdx::_Union_radix_data<_V_type>* _LLast =
-        _STD _Get_unwrapped(_Radix_vec.end());
+    _RDX _Union_radix_data<_V_type>* _LFirst =
+        &* _Radix_vec.begin();
+    const _RDX _Union_radix_data<_V_type>* _LLast =
+        &* _Radix_vec.end();
     for (; _LFirst != _LLast; ++_LFirst) {
       _Radix_vec_tmp[(*_LFirst).mas_data[i]].emplace_back(*_LFirst);
     }
@@ -70,7 +73,7 @@ inline void test(_STD vector<_Ty> vec, size_t begin = 100,
     _STD copy(vec.begin(), vec.begin() + i, b.begin());
 
     auto begin = getCPUTime();
-    rdx::radix_lsd(a.begin(), a.end());
+    _RDX radix_lsd(a.begin(), a.end());
     auto end = getCPUTime();
 
     auto begin1 = getCPUTime();
@@ -109,7 +112,7 @@ int main() {
                     (rand() & 3);
     random_vec_32.emplace_back(temp);
   }
-  _STD cout << "\t\t\t\t===== 8 byte =====" << _STD endl;
+  _STD cout << "\t\t\t\t===== 4 byte =====" << _STD endl;
   test(random_vec_32);
 
   _STD cout << _STD endl << "\t\t\t\t===== 2 byte =====" << _STD endl;
