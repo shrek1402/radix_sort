@@ -26,8 +26,5 @@
     <ClInclude Include="CPUtime.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="xutility.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

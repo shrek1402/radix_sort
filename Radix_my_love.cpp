@@ -2,18 +2,18 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java:
 // http://www.viva64.com
 #define _ITERATOR_DEBUG_LEVEL 0
+
 #include <algorithm>
-#include <iomanip>
 #include <iostream>
-#include <iterator>
-#include <deque>
+#include <map>
+#include <xtree>
 #include <vector>
-#include "xutility.h"
 #include "CPUtime.h"
 
 #ifndef _STD
 #define _STD ::std::
 #endif
+
 
 namespace rdx {
 template <typename _Ty>
@@ -25,16 +25,16 @@ union _Union_radix_data {
 template <class _InIt>
 inline void radix_msd(_InIt _First, _InIt _Last) {}
 
-template <class _InIt>
 // perform function for each element [_First, _Last)
+template <class _InIt>
 inline void radix_lsd(_InIt _First, _InIt _Last) {
   using _V_type = typename _InIt::value_type;
-  _Union_radix_data<_V_type> _T_uni;
+  rdx::_Union_radix_data<_V_type> _T_uni;
   _STD _Adl_verify_range(_First, _Last);           // TODO: reverse !!!
   _V_type* _UFirst = _STD _Get_unwrapped(_First);  // TODO get unwrapped
   const _V_type* _ULast = _STD _Get_unwrapped(_Last);
-  _STD vector<_Union_radix_data<_V_type>> _Radix_vec;
-  _STD deque<_STD vector<_Union_radix_data<_V_type>>> _Radix_vec_tmp(256);
+  _STD vector<::rdx::_Union_radix_data<_V_type>> _Radix_vec;
+  _STD vector<_STD vector<rdx::_Union_radix_data<_V_type>>> _Radix_vec_tmp(256);
   // without uni more fast?
 
   for (; _UFirst != _ULast; ++_UFirst) {
@@ -42,9 +42,9 @@ inline void radix_lsd(_InIt _First, _InIt _Last) {
     _Radix_vec.emplace_back(_T_uni);
   }
   for (size_t i = 0; i < sizeof(_V_type); ++i) {
-    _Union_radix_data<_V_type>* _LFirst =
+    ::rdx::_Union_radix_data<_V_type>* _LFirst =
         _STD _Get_unwrapped(_Radix_vec.begin());
-    const _Union_radix_data<_V_type>* _LLast =
+    const ::rdx::_Union_radix_data<_V_type>* _LLast =
         _STD _Get_unwrapped(_Radix_vec.end());
     for (; _LFirst != _LLast; ++_LFirst) {
       _Radix_vec_tmp[(*_LFirst).mas_data[i]].emplace_back(*_LFirst);
@@ -59,11 +59,12 @@ inline void radix_lsd(_InIt _First, _InIt _Last) {
   }
 }
 }  // namespace rdx
-#define MAX_LENGTH 1000000  // 2  1 1 0.9
+
+#define MAX_LENGTH 100000000  // 2  1 1 0.9
 template <typename _Ty>
-inline void test(_STD vector<_Ty> vec, size_t begin = 256,
+inline void test(_STD vector<_Ty> vec, size_t begin = 100,
                  size_t end = MAX_LENGTH) {
-  for (size_t i = begin; i <= end; i *= 2) {
+  for (size_t i = begin; i <= end; i *= 10) {
     _STD vector<_Ty> a(i), b(i);
     _STD copy(vec.begin(), vec.begin() + i, a.begin());
     _STD copy(vec.begin(), vec.begin() + i, b.begin());
@@ -85,9 +86,9 @@ inline void test(_STD vector<_Ty> vec, size_t begin = 256,
       _STD cout << "\tstd : radix = " << (end1 - begin1) / (end - begin)
                 << _STD endl;
     }
-    
   }
 }
+
 int main() {
   _STD vector<uint64_t> random_vec_64;
   for (size_t i = 0; i < MAX_LENGTH; i++) {
@@ -111,7 +112,7 @@ int main() {
   _STD cout << "\t\t\t\t===== 8 byte =====" << _STD endl;
   test(random_vec_32);
 
-  std::cout << std::endl << "\t\t\t\t===== 2 byte =====" << std::endl;
+  _STD cout << _STD endl << "\t\t\t\t===== 2 byte =====" << _STD endl;
   _STD vector<uint32_t> random_vec_16;
   for (size_t i = 0; i < MAX_LENGTH; i++) {
     uint32_t temp = (((uint16_t)rand()) << 1) | (rand() & 1);
@@ -119,7 +120,7 @@ int main() {
   }
   test(random_vec_16);
 
-  std::cout << std::endl << "\t\t\t\t===== 1 byte =====" << std::endl;
+  _STD cout << _STD endl << "\t\t\t\t===== 1 byte =====" << _STD endl;
   _STD vector<uint32_t> random_vec_8;
   for (size_t i = 0; i < MAX_LENGTH; i++) {
     uint32_t temp = rand();
@@ -128,4 +129,4 @@ int main() {
   test(random_vec_8);
 
   return 0;
-}
+};
