@@ -64,7 +64,6 @@ inline void radix_lsd(_InIt _First, _InIt _Last) {
 }  // namespace rdx
 //rabotay!
 
-
 #define MAX_LENGTH 100000
 template <typename _Ty>
 inline void test(_STD vector<_Ty> vec, size_t begin = 100,
