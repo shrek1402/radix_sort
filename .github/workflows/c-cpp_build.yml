@@ -1,11 +1,7 @@
 name: CMake Build Matrix
 on: 
   push:
-    tags: 
-      - '!refs/tags/*'
-  pull_request:
-    tags: 
-      - '!refs/tags/*'
+
         
 env:
   CMAKE_VERSION: 3.16.2
